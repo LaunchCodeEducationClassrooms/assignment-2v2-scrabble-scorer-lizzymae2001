@@ -21,7 +21,7 @@ function oldScrabbleScorer(word) {
 	  for (const pointValue in oldPointStructure) {
  
 		 if (oldPointStructure[pointValue].includes(word[i])) {
-			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+			letterPoints += `\nPoints for '${word[i]}': ${pointValue}\n`
 		 }
  
 	  }
@@ -33,19 +33,64 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   let word = input.question("Let's play some scrabble! Enter a word to score:");
+   let word = input.question("Let's play some Scrabble!\n\nEnter a word to score: ");
+   // console.log(oldScrabbleScorer(word));
 };
 
+let simpleScore = function(word) {
+  word = word.toUpperCase();
+  let totalSimple = 0;
+  for (let i = 0; i < word.length; i++) {
+    totalSimple += 1;
+    }
+  return totalSimple;
+  }
 
-let simpleScore;
 
-let vowelBonusScore;
+let vowels = ['A', 'E', 'I', 'O', 'U']
+
+let vowelBonusScore = function(word) {
+  word = word.toUpperCase();
+  let totalBonusScore = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (vowels.includes(word[i])) {
+      totalBonusScore += 3
+       } else {
+       totalBonusScore += 1;
+        }
+      }
+  return totalBonusScore;
+}
 
 let scrabbleScore;
 
-const scoringAlgorithms = [];
 
-function scorerPrompt() {}
+const simple = {
+  name: 'Simple Score',
+  description: 'Each letter is worth 1 point.',
+  scorerFunction: simpleScore
+};
+
+const bonus = {
+  name: 'Bonus Vowels',
+  description: 'Vowels are 3 pts, consonants are 1 pt.',
+  scorerFunction: vowelBonusScore
+};
+
+const scrabble = {
+  name: 'Scrabble',
+  description: 'The traditional scoring algorithm',
+  scorerFunction: oldScrabbleScorer
+};
+
+const scoringAlgorithms = [simple, bonus, scrabble];
+
+
+function scorerPrompt() {
+  let scoreType = input.question("Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: ");
+   console.log("algorithm name: ", scoringAlgorithms[scoreType].name); 
+   console.log("scorerFunction result: ", scoringAlgorithms[scoreType].scorerFunction());
+};
 
 function transform() {};
 
@@ -53,6 +98,7 @@ let newPointStructure;
 
 function runProgram() {
    initialPrompt();
+   scorerPrompt();
    
 }
 
@@ -70,4 +116,3 @@ module.exports = {
 	runProgram: runProgram,
 	scorerPrompt: scorerPrompt
 };
-
