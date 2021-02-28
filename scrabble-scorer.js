@@ -12,6 +12,7 @@ const oldPointStructure = {
   5: ['K'],
   8: ['J', 'X'],
   10: ['Q', 'Z']
+
 };
 
 function oldScrabbleScorer(word) {
@@ -46,7 +47,11 @@ let simpleScore = function(word) {
   word = word.toUpperCase();
   let totalSimple = 0;
   for (let i = 0; i < word.length; i++) {
-    totalSimple += 1;
+    if (word[i] !== ' '){
+      totalSimple += 1;
+    } else {
+      totalSimple +=0;
+      }
     }
   return totalSimple;
   }
@@ -100,9 +105,13 @@ const scoringAlgorithms = [simple, bonus, scrabble];
 
 
 function scorerPrompt() {
-  let scoreType = input.question("Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: "); 
-
-  console.log(`Score for '${initialWord}': ${scoringAlgorithms[scoreType].scorerFunction(initialWord)}`);
+  let scoreType = Number(input.question("Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: ")); 
+  if (scoreType === 0 || scoreType === 1 || scoreType === 2){
+   console.log(`Score for '${initialWord}': ${scoringAlgorithms[scoreType].scorerFunction(initialWord)}`);
+   } else {
+     console.log('Invalid input...');
+     scorerPrompt();
+ }
 };
 
 
@@ -135,10 +144,7 @@ function transform(oldPointStructure) {
 
 let newPointStructure = transform(oldPointStructure);
 
-//console.log("Scrabble scoring values for");
-//console.log("letter a: ", newPointStructure.a);
-//console.log("letter j: ", newPointStructure.j);
-//console.log("letter z: ", newPointStructure["z"]);
+newPointStructure[' '] = 0;
 
 
 function runProgram() {
