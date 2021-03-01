@@ -57,7 +57,7 @@ let simpleScore = function(word) {
   }
 
 
-let vowels = ['A', 'E', 'I', 'O', 'U']
+let vowels = ['a', 'e', 'i', 'o', 'u']
 
 let vowelBonusScore = function(word) {
   word = word.toLowerCase();
