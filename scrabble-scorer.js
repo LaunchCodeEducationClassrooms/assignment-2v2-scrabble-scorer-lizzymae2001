@@ -36,8 +36,7 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   initialWord = input.question("Let's play some Scrabble!\n\nEnter a word to score: ");
-   return initialWord;
+   return initialWord = input.question("Let's play some Scrabble!\n\nEnter a word to score: ");
    // console.log(oldScrabbleScorer(initialWord));
 };
 
@@ -81,7 +80,18 @@ function scrabbleScore(word) {
 
 
 const scoringAlgorithms = [
-  Object({ name: 'Simple Score', description: 'Each letter is worth 1 point.', scorerFunction: simpleScore }), Object({ name: 'Bonus Vowels', description: 'Vowels are 3 pts, consonants are 1 pt.', scorerFunction: vowelBonusScore }), Object({ name: 'Scrabble', description: 'The traditional scoring algorithm', scorerFunction: scrabbleScore })
+  { name: 'Simple Score', 
+  description: 'Each letter is worth 1 point.', 
+  scorerFunction: simpleScore 
+  },
+  { name: 'Bonus Vowels', 
+  description: 'Vowels are 3 pts, consonants are 1 pt.', 
+  scorerFunction: vowelBonusScore 
+  }, 
+  { name: 'Scrabble', 
+  description: 'The traditional scoring algorithm', 
+  scorerFunction: scrabbleScore 
+  }
 ];
 
 function scorerPrompt() {
@@ -96,14 +106,14 @@ function scorerPrompt() {
 
 
 function transform(object) {
-  let newPointStructureObject = {};
+  let transformedObject = {};
   for(item in object){
     for (i = 0; i < object[item].length; i++){
       let key = object[item][i].toLowerCase();
-      newPointStructureObject[`${key}`] = Number(item);
+      transformedObject[`${key}`] = Number(item);
     }
   }
-  return newPointStructureObject;
+  return transformedObject;
 };
 
 let newPointStructure = transform(oldPointStructure);
